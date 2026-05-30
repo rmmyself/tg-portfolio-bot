@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────
+#   Portfolio Bot — Configuration File
+#   Edit this file, don't touch bot.py
+# ─────────────────────────────────────────
+
+bot_token: "YOUR_BOT_TOKEN_HERE"
+admin_id: 0
+
+developer:
+  name_ru: "Имя"
+  name_en: "Your Name"
+  handle: "yourusername"
+  stack: "Python · API · Linux"
+  focus_ru: "Боты и автоматизация"
+  focus_en: "Bots & automation"
+  status_ru: "Открыт к заказам ✅"
+  status_en: "Open to orders ✅"
+  about_ru: |
+    Краткое описание о себе на русском.
+    Что умеешь, чем занимаешься.
+  about_en: |
+    Short description about yourself in English.
+    What you do and what you build.
+
+services:
+  ru:
+    - "Telegram боты (любой сложности)"
+    - "Discord боты и модерация"
+    - "Интеграции с API и автоматизация"
+    - "Хостинг и аптайм 24/7 включён"
+  en:
+    - "Telegram bots (any complexity)"
+    - "Discord bots & moderation tools"
+    - "API integrations & automation"
+    - "Hosting & 24/7 uptime included"
+
+links:
+  github: "https://github.com/yourusername"
+  website_enabled: false
+  website: "https://yourwebsite.com"
+
+repos:
+  - name: "project-one"
+    desc_ru: "Описание первого проекта"
+    desc_en: "Description of the first project"
+    tech: "Python · Library · Tool"
+    url: "https://github.com/yourusername/project-one"
+
+  - name: "project-two"
+    desc_ru: "Описание второго проекта"
+    desc_en: "Description of the second project"
+    tech: "Python · Library · Tool"
+    url: "https://github.com/yourusername/project-two"
+
+  - name: "project-three"
+    desc_ru: "Описание третьего проекта"
+    desc_en: "Description of the third project"
+    tech: "Python · Library · Tool"
+    url: "https://github.com/yourusername/project-three"

@@ -8,10 +8,11 @@
 ╚═══════════════════════════════════════╝
 ```
 
-**A sleek Telegram portfolio bot that showcases your GitHub projects with style.**
+**A sleek Telegram portfolio bot. Zero code editing — configure everything in one YAML file.**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Telegram](https://img.shields.io/badge/Telegram-Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/bots)
+[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org)
 [![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 
 </div>
@@ -20,16 +21,16 @@
 
 ## ✦ What it does
 
-A personal portfolio bot for Telegram. Visitors tap `/start` and get an interactive menu to explore your projects, read your stack and bio, and jump straight to your GitHub repos — all without leaving Telegram.
+A personal portfolio bot for Telegram. Everything — texts, links, projects, bio — is configured in a single `config.yaml` file. No need to touch `bot.py` at all.
 
 ```
 /start
-  ├── 📁 Projects
-  │     ├── → tg-ai-assistant   (link to GitHub)
-  │     └── → discord-modbot    (link to GitHub)
-  ├── 👤 About
-  └── 🐙 GitHub Profile
-       (🌐 Website — toggle on/off in config)
+  ├── 📁 Projects       ← pulled from config.yaml
+  │     └── → each repo with desc, stack, GitHub link
+  ├── 👤 About          ← pulled from config.yaml
+  ├── 📝 Place an order ← client writes brief → you get notified → reply in bot
+  └── 🐙 GitHub         ← pulled from config.yaml
+       (🌐 Website — one toggle in config.yaml)
 ```
 
 ---
@@ -38,12 +39,27 @@ A personal portfolio bot for Telegram. Visitors tap `/start` and get an interact
 
 | Feature | Details |
 |---|---|
-| 🗂 Project showcase | Each repo gets its own card with description, tech stack & GitHub link |
-| 👤 About section | Bio, stack, availability status |
-| 🐙 GitHub link | Direct link to your profile |
-| 🌐 Website toggle | Enable/disable website button in one line |
-| ✏️ Easy to edit | Add new repos in 5 lines of Python |
-| 💬 Inline navigation | No page reloads — smooth button-based UX |
+| ⚙️ YAML config | Edit all texts, links, projects without touching the code |
+| 🌐 Bilingual | Russian & English — language saved per user in SQLite |
+| 🗂 Project showcase | Each repo: name, description, tech stack, GitHub link |
+| 📝 Order system | Client writes a brief → you get notified → reply right in the bot |
+| 💬 Direct reply | Reply to clients without leaving Telegram |
+| 🗄 Order history | All orders saved to SQLite |
+| 🌐 Website toggle | `website_enabled: true/false` in config |
+
+---
+
+## ✦ How the order system works
+
+```
+Client              Bot                  You (admin)
+  │                  │                       │
+  ├── "Place order" ►│                       │
+  ├── writes brief ──►── saves to SQLite     │
+  │◄── "Received!" ──│── notifies ──────────►│
+  │                  │◄── taps "Reply" ───────┤
+  │◄── reply ────────│◄── writes reply ───────┤
+```
 
 ---
 
@@ -60,34 +76,34 @@ cd tg-portfolio-bot
 pip install -r requirements.txt
 ```
 
-**3. Configure**
-```bash
-cp .env.example .env
+**3. Edit `config.yaml`**
+
+This is the only file you need to edit:
+
+```yaml
+bot_token: "YOUR_BOT_TOKEN_HERE"
+admin_id: 123456789          # your Telegram ID (@userinfobot)
+
+developer:
+  name_ru: "Алекс"
+  name_en: "Alex"
+  handle: "yourusername"
+  ...
+
+links:
+  github: "https://github.com/yourusername"
+  website_enabled: false
+  website: "https://yoursite.com"
+
+repos:
+  - name: "your-repo"
+    desc_ru: "Описание"
+    desc_en: "Description"
+    tech: "Python · FastAPI"
+    url: "https://github.com/you/repo"
 ```
 
-Edit `.env`:
-```env
-TELEGRAM_BOT_TOKEN=your_token_here
-```
-
-**4. Customize** — open `bot.py` and edit:
-```python
-GITHUB_USERNAME = "your_username"   # your GitHub handle
-WEBSITE_ENABLED = False             # set True to show website button
-WEBSITE_URL = "https://yoursite.com"
-
-REPOS = [
-    {
-        "name": "your-repo-name",
-        "desc": "Short description",
-        "tech": ["Python", "FastAPI"],
-        "url": "https://github.com/you/your-repo",
-    },
-    # add more repos here...
-]
-```
-
-**5. Run**
+**4. Run**
 ```bash
 python bot.py
 ```
@@ -105,15 +121,13 @@ After=network.target
 WorkingDirectory=/path/to/tg-portfolio-bot
 ExecStart=/usr/bin/python3 bot.py
 Restart=always
-EnvironmentFile=/path/to/tg-portfolio-bot/.env
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 ```bash
-sudo systemctl enable portfolio-bot
-sudo systemctl start portfolio-bot
+sudo systemctl enable portfolio-bot && sudo systemctl start portfolio-bot
 ```
 
 ---
@@ -121,6 +135,8 @@ sudo systemctl start portfolio-bot
 ## ✦ Stack
 
 - [python-telegram-bot 21](https://github.com/python-telegram-bot/python-telegram-bot)
+- [PyYAML](https://pyyaml.org/)
+- SQLite (built-in)
 - Python 3.10+
 
 ---

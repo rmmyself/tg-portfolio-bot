@@ -1,0 +1,4 @@
+config_personal.yaml
+users.db
+__pycache__/
+*.pyc
