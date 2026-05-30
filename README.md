@@ -85,8 +85,8 @@ bot_token: "YOUR_BOT_TOKEN_HERE"
 admin_id: 123456789          # your Telegram ID (@userinfobot)
 
 developer:
-  name_ru: "Алекс"
-  name_en: "Alex"
+  name_ru: "ваше имя "
+  name_en: "yourusername"
   handle: "yourusername"
   ...
 
